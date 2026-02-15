@@ -1,6 +1,5 @@
 @use "pkg:@fontsource-utils/scss" as fontsource;
-@use "pkg:@fontsource-variable/atkinson-hyperlegible-next/scss" as inter;
-@use "pkg:@fontsource-variable/atkinson-hyperlegible-next/scss" as poppins;
+@use "pkg:@fontsource-variable/atkinson-hyperlegible-next/scss" as hyperlegible-next;
 
 $weights: $font-weight-light, $font-weight-normal, $font-weight-semibold, $font-weight-bold;
 $subsets: (latin, latin-ext);
@@ -8,17 +7,9 @@ $font-path: "./plugins/nodebb-theme-homebox" !default;
 
 
 @include fontsource.faces(
-	$metadata: inter.$metadata,
+	$metadata: hyperlegible-next.$metadata,
 	$subsets: $subsets,
 	$weights: $weights,
 	$styles: all,
-	$directory: "#{$font-path}/inter"
-);
-
-@include fontsource.faces(
-  $metadata: poppins.$metadata,
-  $subsets: $subsets,
-  $weights: $weights,
-  $styles: all,
-  $directory: "#{$font-path}/poppins"
+	$directory: "#{$font-path}/hyperlegible-next"
 );
