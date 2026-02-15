@@ -21,5 +21,6 @@
 		"hyperlegible-next": "node_modules/@fontsource-variable/atkinson-hyperlegible-next/files",
 		"hyperlegible-mono": "node_modules/@fontsource-variable/atkinson-hyperlegible-mono/files"
 	},
-	"languages": "languages"
+	"languages": "languages",
+	"defaultLang": "en-GB"
 }
