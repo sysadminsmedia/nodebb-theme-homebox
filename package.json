@@ -1,14 +1,14 @@
 {
-  "name": "nodebb-theme-harmony",
+  "name": "nodebb-theme-homebox",
   "version": "2.2.11",
   "nbbpm": {
     "compatibility": "^4.0.0"
   },
-  "description": "Harmony theme for NodeBB",
+  "description": "Homebox theme for NodeBB",
   "main": "library.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/NodeBB/nodebb-theme-harmony"
+    "url": "https://github.com/sysadminsmedia/nodebb-theme-homebox"
   },
   "scripts": {
     "lint": "eslint .",
@@ -24,25 +24,13 @@
     "bootstrap",
     "responsive"
   ],
-  "contributors": [
-    {
-      "name": "Julian Lam",
-      "email": "julian@nodebb.org",
-      "url": "https://github.com/julianlam"
-    },
-    {
-      "name": "Barış Soner Uşaklı",
-      "email": "baris@nodebb.org",
-      "url": "https://github.com/barisusakli"
-    }
-  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/NodeBB/nodebb-theme-harmony/issues"
+    "url": "https://github.com/NodeBB/nodebb-theme-homebox/issues"
   },
   "dependencies": {
-    "@fontsource/inter": "5.2.8",
-    "@fontsource/poppins": "5.2.7"
+    "@fontsource-variable/atkinson-hyperlegible-mono": "^5.2.5",
+    "@fontsource-variable/atkinson-hyperlegible-next": "^5.2.6"
   },
   "devDependencies": {
     "eslint": "10.0.0",

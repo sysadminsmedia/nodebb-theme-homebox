@@ -9,9 +9,26 @@
 		{{{ if !disableCustomUserSkins }}}
 		<label for="bootswatchSkin" class="form-label fw-bold">[[user:select-skin]]</label>
 		<select class="form-select form-select-sm" id="bootswatchSkin" data-property="bootswatchSkin">
-			{{{each bootswatchSkinOptions}}}
-			<option value="{bootswatchSkinOptions.value}" {{{ if bootswatchSkinOptions.selected }}}selected{{{ end }}}>{bootswatchSkinOptions.name}</option>
+			{{{ if (bootswatchSkinOptions.default && bootswatchSkinOptions.default.length) }}}
+			{{{each bootswatchSkinOptions.default}}}
+			<option value="{./value}" {{{ if ./selected }}}selected{{{ end }}}>{./name}</option>
 			{{{end}}}
+			{{{ end }}}
+			{{{ if (bootswatchSkinOptions.dark && bootswatchSkinOptions.dark.length) }}}
+			{{{each bootswatchSkinOptions.dark}}}
+			{{{ if (./value == "darkly") }}}
+			<option value="{./value}" {{{ if ./selected }}}selected{{{ end }}}>{./name}</option>
+			{{{ end }}}
+			{{{end}}}
+			{{{ end }}}
+			{{{ if ((!bootswatchSkinOptions.default || !bootswatchSkinOptions.default.length) && (!bootswatchSkinOptions.dark || !bootswatchSkinOptions.dark.length)) }}}
+			<option value="noskin" {{{ if !settings.bootswatchSkin }}}selected{{{ end }}}>
+				Default (Homebox)
+			</option>
+			<option value="darkly" {{{ if (settings.bootswatchSkin == "darkly") }}}selected{{{ end }}}>
+				Homebox Dark
+			</option>
+			{{{ end }}}
 		</select>
 
 		<hr/>

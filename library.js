@@ -26,7 +26,7 @@ library.init = async function (params) {
 	const { router, middleware } = params;
 	const routeHelpers = require.main.require('./src/routes/helpers');
 
-	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/harmony', [], controllers.renderAdminPage);
+	routeHelpers.setupAdminPageRoute(router, '/admin/plugins/homebox', [], controllers.renderAdminPage);
 
 	routeHelpers.setupPageRoute(router, '/user/:userslug/theme', [
 		middleware.exposeUid,
@@ -56,9 +56,9 @@ async function buildSkins() {
 
 library.addAdminNavigation = async function (header) {
 	header.plugins.push({
-		route: '/plugins/harmony',
+		route: '/plugins/homebox',
 		icon: 'fa-paint-brush',
-		name: '[[themes/harmony:theme-name]]',
+		name: '[[themes/homebox:theme-name]]',
 	});
 	return header;
 };
@@ -68,7 +68,7 @@ library.addProfileItem = async (data) => {
 		id: 'theme',
 		route: 'theme',
 		icon: 'fa-paint-brush',
-		name: '[[themes/harmony:settings.title]]',
+		name: '[[themes/homebox:settings.title]]',
 		visibility: {
 			self: true,
 			other: false,
@@ -139,7 +139,7 @@ library.defineWidgetAreas = async function (areas) {
 
 library.loadThemeConfig = async function (uid) {
 	const [themeConfig, userConfig] = await Promise.all([
-		meta.settings.get('harmony'),
+		meta.settings.get('homebox'),
 		user.getSettings(uid),
 	]);
 
@@ -164,7 +164,7 @@ library.getThemeConfig = async function (config) {
 };
 
 library.getAdminSettings = async function (hookData) {
-	if (hookData.plugin === 'harmony') {
+	if (hookData.plugin === 'homebox') {
 		hookData.values = {
 			...defaults,
 			...hookData.values,
@@ -179,10 +179,72 @@ library.saveUserSettings = async function (hookData) {
 			hookData.settings[key] = hookData.data[key] || undefined;
 		}
 	});
+
+	// Validate and filter bootswatchSkin if present
+	if (hookData.data.hasOwnProperty('bootswatchSkin')) {
+		const allowedSkins = ['', 'darkly'];
+		const skinValue = hookData.data.bootswatchSkin;
+		if (allowedSkins.includes(skinValue)) {
+			hookData.settings.bootswatchSkin = skinValue;
+		}
+		// If skin value is not allowed, don't set it (let NodeBB use user's current setting)
+	}
+
 	return hookData;
 };
 
 library.filterMiddlewareRenderHeader = async function (hookData) {
-	hookData.templateData.bootswatchSkinOptions = await meta.css.getSkinSwitcherOptions(hookData.req.uid);
+	const skinOptions = await meta.css.getSkinSwitcherOptions(hookData.req.uid);
+	const filtered = library.filterSkinOptions(skinOptions);
+
+	// Check if this is a categorized object (for skin switcher)
+	if (filtered && typeof filtered === 'object' && !Array.isArray(filtered) &&
+	    (filtered.light || filtered.dark || filtered.default || filtered.custom)) {
+		// Keep the categorized format for skin switcher components
+		hookData.templateData.bootswatchSkinOptions = filtered;
+	} else if (Array.isArray(filtered)) {
+		// If already a flat array, use it directly
+		hookData.templateData.bootswatchSkinOptions = filtered;
+	} else {
+		// Fallback: flatten the categorized data
+		const flattened = [];
+		if (filtered && typeof filtered === 'object') {
+			['light', 'dark', 'default', 'custom'].forEach(category => {
+				if (Array.isArray(filtered[category])) {
+					flattened.push(...filtered[category]);
+				}
+			});
+		}
+		hookData.templateData.bootswatchSkinOptions = flattened.length > 0 ? flattened : filtered;
+	}
+
 	return hookData;
+};
+
+library.filterSkinOptions = function (skinOptions) {
+	// Filter to only allow "no skin" and "darkly" options
+	const allowedSkins = ['noskin', 'darkly']; // empty string for "no skin"
+
+	const filterOptions = (options) => {
+		if (!Array.isArray(options)) {
+			return [];
+		}
+		// Filter to only include allowed skins
+		return options.filter(opt => opt && allowedSkins.includes(opt.value));
+	};
+
+	// Filter each category if it's an object with light/dark/default/custom properties
+	if (typeof skinOptions === 'object' && !Array.isArray(skinOptions)) {
+		return {
+			light: filterOptions(skinOptions.light),
+			dark: filterOptions(skinOptions.dark),
+			default: filterOptions(skinOptions.default),
+			custom: filterOptions(skinOptions.custom),
+		};
+	} else if (Array.isArray(skinOptions)) {
+		// If it's an array, filter directly
+		return filterOptions(skinOptions);
+	}
+	// Return empty array as fallback
+	return [];
 };

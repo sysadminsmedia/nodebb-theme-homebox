@@ -1,26 +1,26 @@
 // only overrides to bs5 variables here
 
-// Harmony colours
+// Homebox colours
 $white:    #fff !default;
-$gray-100: #f8f9fa !default;
-$gray-200: #e9ecef !default;
-$gray-300: #dee2e6 !default;
-$gray-400: #ced4da !default;
-$gray-500: #adb5bd !default;
+$gray-100: hsl(60 3% 96%) !default;
+$gray-200: hsl(60 4% 93%) !default;
+$gray-300: hsl(70 4% 75%) !default;
+$gray-400: hsl(72 5% 53%) !default;
+$gray-500: hsl(75 6% 34%)!default;
 $gray-600: #6c757d !default;
-$gray-700: #495057 !default;
-$gray-800: #343a40 !default;
-$gray-900: #212529 !default;
+$gray-700: hsl(75 10% 21%) !default;
+$gray-800: hsl(75 14% 14%) !default;
+$gray-900: hsl(75 18% 8%) !default;
 $black:    #000 !default;
 
-$blue:    #0d6efd !default;
-$red:     #dc3545 !default;
-$yellow:  #ffc107 !default;
-$green:   #198754 !default;
-$cyan:    #0dcaf0 !default;
+$blue:    hsl(213 24% 48%) !default;
+$red:     hsl(6 26% 48%) !default;
+$yellow:  hsl(42 28% 50%) !default;
+$green:   hsl(139 24% 47%) !default;
+$cyan:    hsl(190 26% 48%) !default;
 
-$primary:       $blue !default;
-$secondary:     $gray-600 !default;
+$primary:       hsl(139 16% 43%) !default;
+$secondary:     hsl(77 8% 17%) !default;
 $success:       $green !default;
 $info:          $cyan !default;
 $warning:       $yellow !default;
@@ -51,8 +51,8 @@ $link-decoration: none;
 $link-hover-decoration: underline;
 
 // Custom fonts
-$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-$font-family-secondary: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+$font-family-secondary: "Atkinson Hyperlegible Next", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
 $font-weight-semibold: 500 !default;
 $small-font-size: 0.875rem !default;
 
@@ -63,4 +63,8 @@ $breadcrumb-item-padding-x: 12px !default;
 
 .form-control::placeholder, .bootstrap-tagsinput::placeholder {
 	color: $gray-500 !important;
+}
+
+.btn-primary {
+	color: $gray-200 !important;
 }
